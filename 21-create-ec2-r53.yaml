@@ -24,19 +24,8 @@
   - name: print the output
     ansible.builtin.debug:
       msg: "{{ ec2_instances }}"
-      # private IP R53 
-  # - name: create r53 records
-  #   amazon.aws.route53:
-  #     state: present
-  #     zone: "{{ zone }}"
-  #     record: "{{ item.item }}.{{ zone }}"   #mysql.rrajesh.online
-  #     type: A
-  #     ttl: 1
-  #     value: "{{ item.instances[0].private_ip_address }}"
-  #     wait: true
-  #     overwrite: true
-  #   loop: "{{ ec2_instances.results }}"
 
+      # private IP R53 
     - name: create r53 private records
       amazon.aws.route53:
         state: present
@@ -50,17 +39,17 @@
       loop: "{{ ec2_instances.results }}" 
   
     - name: create r53 public records for frontend
-    amazon.aws.route53:
-      state: present
-      zone: "{{ zone }}"
-      record: "{{ item.item }}.{{ zone }}"   #frontend.rrajesh.online
-      type: A
-      ttl: 1
-      value: "{{ item.instances[0].public_ip_address }}"
-      wait: true
-      overwrite: true
-    loop: "{{ ec2_instances.results }}" 
-    when: ec2_instances.results.item == "frontend"
+      amazon.aws.route53:
+        state: present
+        zone: "{{ zone }}"
+        record: "{{ item.item }}.{{ zone }}"   #frontend.rrajesh.online
+        type: A
+        ttl: 1
+        value: "{{ item.instances[0].public_ip_address }}"
+        wait: true
+        overwrite: true
+      loop: "{{ ec2_instances.results }}" 
+      when: ec2_instances.results.item == "frontend"
 
 
 
