@@ -3,7 +3,7 @@
   connection: local #for local hosts
   vars:
     course: "DevOps with AWS"   # string
-    duration: 120Hrs  #number
+    duration: 120  #number
     topics: #list
     - Linux
     - Shell
@@ -17,8 +17,8 @@
       cm: ansible
       cloud: aws
       aws:
-      - IAM
-      - S3
+        - IAM
+        - S3
   tasks:
   - name: print the course information
     ansible.builtin.debug:
